@@ -15,9 +15,8 @@ using namespace std;
 Програма повинна забезпечувати вибір за допомогою меню і виконання однієї наступних функцій:
  первісне введення даних в інформаційну систему (із клавіатури чи з файлу);
 //                        виведення даних про всі потяги;
- виведення даних пpо потяг з запитаним номером;
- виведення даних про ті потяги, що слідують до запитаної станції
-призначення.
+                          виведення даних пpо потяг з запитаним номером;
+                          виведення даних про ті потяги, що слідують до запитаної станції призначення.
 Збереження даних організувати з застосуванням контейнерного класу vector.
 */
 
@@ -90,6 +89,37 @@ public:
 		this->size++;
 	}
 
+	//Vstavka elementa
+	void InsertTrainByIndex()
+	{
+		T1 numberTrain;
+		T2 destinationStation;
+		T3 departureTime;
+		int index;
+
+		cout << "Enter number of Train for number: ";					cin >> numberTrain;
+		cout << "Enter destination Station of Train: ";					cin >> destinationStation;
+		cout << "Enter the departure time of Train: ";					cin >> departureTime;
+		cout << " Enter the train train number to add: ";				cin >> index;
+
+		if (index == 0)
+		{
+			Pop(numberTrain, destinationStation, departureTime);
+		}
+		else
+		{
+			Train<T1, T2, T3> *prev = this->head;
+			for (int i = 0; i < index - 1; i++)
+			{
+				prev = prev->nextTrain;
+			}
+			Train<T1, T2, T3> *newTrain = new Train<T1, T2, T3>(numberTrain, destinationStation, departureTime, prev->nextTrain);
+			prev->nextTrain = newTrain;
+			size++;
+		}
+	}
+
+
 
 	//Metod vydalennia pershogo elementa
 	void DeleteFirst()
@@ -103,8 +133,10 @@ public:
 
 
 	//Metod vydalyty za indeksom
-	void RemoveByIndex(const int index)
+	void RemoveByIndex()
 	{
+		int index;
+		cout << "Enter the train serial number to be removed: "; cin >> index;
 		if (index == 0)
 		{
 			DeleteFirst();
@@ -131,10 +163,11 @@ public:
 
 		while (tmp != nullptr)
 		{
-			cout << "Train N " << counter + 1 << ": " << endl;
+			counter++;
+			cout << "Train N " << counter << ": " << endl;
 			cout << "Train's number: " << tmp->numberTrain << "\tDestination station\t: " << tmp->destinationStation << "\tTime: " << tmp->departureTime<< endl;
 			tmp = tmp->nextTrain;
-			counter++;
+			
 		}
 		//cout << "=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+" << endl;
 	}
@@ -164,31 +197,61 @@ public:
 		int index;
 		Train<T1, T2, T3> *tmp = head;
 		int counter = 0;
-		
 
-		cout << "Enter the train number "; cin >> index;
+		bool isIndex = false;
 		
-			while (train != nullptr)
+		cout << "Enter the train number: "; cin >> index;
+		index--;
+			while ( tmp!= nullptr)
 			{
-				if (index == tmp->numberTrain)
+				
+				if (index == counter)
 				{
+					cout << "Counter = " << counter << endl;
+					cout << "Index = " << index << endl;
 
 					cout << "Train's number: " << tmp->numberTrain << "\tDestination station\t: " << tmp->destinationStation << "\tTime: " << tmp->departureTime << endl;
-					tmp = tmp->nextTrain;
-					counter++;
+					isIndex = true;
 				}
-				else
-				{
-					cout << "Please check that you are correct" << endl;
-				}
-			}
-		
-		
+				tmp = tmp->nextTrain;
+				counter++;
 				
+			}
+
+			if (!isIndex)
+				{
+				cout << "Please check that you are correct" << endl;
+				}
+		
+	
 
 	}
 
+	void FindByDestination()
+	{
+		string index;
+		Train<T1, T2, T3> *tmp = head;
+		int counter = 0;
 
+		cout << "Enter the destination station: "; cin >> index;
+
+		while (tmp != nullptr)
+		{
+			
+			if (index == tmp->destinationStation)
+			{
+
+				cout << "Train's number: " << tmp->numberTrain << "\tDestination station\t: " << tmp->destinationStation << "\tTime: " << tmp->departureTime << endl;
+				
+			}
+			tmp = tmp->nextTrain;
+			counter++;
+
+		}
+
+		
+
+	}
 
 
 	
@@ -220,9 +283,9 @@ void Menu()
 		cout << "        11.From File\n";
 		cout << "        12.From keyboard\n";
 		cout << "  2.Browsing the database:\n"; //Перегляд бази даних
-		cout << "        21.All database\n"; //+
-		cout << "        22.By number of Train: \n"; //+
 		cout << "  3.Editing the database:\n"; //Редагування бази даних
+		cout << "        31.Delete by Index Train\n";
+		cout << "        32.Add new Train\n";
 		cout << "  4.Database output:\n"; //Вивід бази даних
 		cout << "  5.Data search:\n";//Пошук
 		cout << "        51.By Trains number\n"; 
@@ -246,10 +309,10 @@ void Menu()
 			system("cls");
 			cout << "Enter the number of trains: ";	 cin >> numberOfTrain;
 			cout << "======================================" << endl;
-			for (int i = 0; i < numberOfTrain; i++)
+			for (int i = 1; i <= numberOfTrain; i++)
 			{
 				cout << "====================================================" << endl;
-				cout << "Add information about Train N [" << i + 1 << "]" << endl;
+				cout << "Add information about Train N [" << i << "]" << endl;
 				cout << "Enter number of Train for number: ";					cin >> numberTrain;
 				cout << "Enter destination Station of Train: ";					cin >> description;
 				cout << "Enter the departure time of Train: ";					cin >> time;
@@ -259,25 +322,25 @@ void Menu()
 			system("pause");
 			break;
 		}
-		case 21: //Перегляд бази даних
+		case 2: //Перегляд бази даних
 		{
 			system("cls");
 			station.ShowInfo();
 			system("pause");
 			break;
 		}
-		case 22: //Перегляд бази даних
+		
+		case 31:
 		{
 			system("cls");
-			station.ShowInfoByIndex();
-			
+			station.RemoveByIndex();
 			system("pause");
 			break;
 		}
-		case 3:
+		case 32:
 		{
 			system("cls");
-
+			station.InsertTrainByIndex();
 			system("pause");
 			break;
 		}
@@ -298,14 +361,14 @@ void Menu()
 		case 51:
 		{
 			system("cls");
-
+			station.ShowInfoByIndex();
 			system("pause");
 			break;
 		}
 		case 52:
 		{
 			system("cls");
-
+			station.FindByDestination();
 			system("pause");
 			break;
 		}
