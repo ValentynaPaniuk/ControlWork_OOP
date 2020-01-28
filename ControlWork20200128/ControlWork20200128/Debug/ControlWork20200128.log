@@ -1,0 +1,3 @@
+﻿  Source.cpp
+d:\paniuk\controlwork\controlwork20200128\controlwork20200128\source.cpp(171): error C3861: 'train': identifier not found
+  d:\paniuk\controlwork\controlwork20200128\controlwork20200128\source.cpp(199): note: see reference to class template instantiation 'Station<T1,T2,T3>' being compiled
