@@ -90,7 +90,7 @@ public:
 	}
 
 	//Vstavka elementa
-	void InsertTrainByIndex()
+	/*void InsertTrainByIndex()
 	{
 		T1 numberTrain;
 		T2 destinationStation;
@@ -118,7 +118,7 @@ public:
 			size++;
 		}
 	}
-
+*/
 
 
 	//Metod vydalennia pershogo elementa
@@ -140,6 +140,7 @@ public:
 		if (index == 0)
 		{
 			DeleteFirst();
+			
 		}
 		else
 		{
@@ -153,6 +154,7 @@ public:
 			delete toDel;
 			size--;
 		}
+		cout << "The train N"<<index<<" was removed from the database" << endl;
 	}
 
 	//Metod vyvodu na ekran
@@ -280,12 +282,12 @@ void Menu()
 		system("cls");
 		cout << " =================     MENU   ==============================:\n";
 		cout << "  1.Create Station:\n"; // Ввід бази даних
-		cout << "        11.From File\n";
-		cout << "        12.From keyboard\n";
+		cout << "        11.From keyboard\n";
+		cout << "        12.From File\n";
 		cout << "  2.Browsing the database:\n"; //Перегляд бази даних
 		cout << "  3.Editing the database:\n"; //Редагування бази даних
 		cout << "        31.Delete by Index Train\n";
-		cout << "        32.Add new Train\n";
+		//cout << "        32.Add new Train\n";
 		cout << "  4.Database output:\n"; //Вивід бази даних
 		cout << "  5.Data search:\n";//Пошук
 		cout << "        51.By Trains number\n"; 
@@ -297,14 +299,14 @@ void Menu()
 		cin >> menu;
 		switch (menu)
 		{
-		case 11: // Створити базу даних з файлу
+		case 12: // Створити базу даних з файлу
 		{
 			system("cls");
 
 			system("pause");
 			break;
 		}
-		case 12: // Ввести потяг з клавіатури
+		case 11: // Ввести потяг з клавіатури
 		{
 			system("cls");
 			cout << "Enter the number of trains: ";	 cin >> numberOfTrain;
@@ -340,7 +342,7 @@ void Menu()
 		case 32:
 		{
 			system("cls");
-			station.InsertTrainByIndex();
+			//station.InsertTrainByIndex();
 			system("pause");
 			break;
 		}
